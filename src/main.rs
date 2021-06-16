@@ -2,6 +2,11 @@
 #![no_main]
 #![no_std]
 
+mod point;
+mod utils;
+mod point_set;
+use point_set::PointSet;
+use point::Point;
 // Halt on panic
 use panic_halt as _; // panic handler
 
@@ -27,6 +32,15 @@ fn main() -> ! {
 
         // Create a delay abstraction based on SysTick
         let mut delay = hal::delay::Delay::new(cp.SYST, clocks);
+
+        //-------------------------------------------------------------------------
+        //                        testing code
+        //-------------------------------------------------------------------------
+        let mut set_point: PointSet<f32> = PointSet::new();
+        let cloud_points_test = [12.0, 20f32.to_radians(), 10.0, 15f32.to_radians(), 20.0, 90f32.to_radians()];
+        for distance_angle in cloud_points_test.windows(2) {
+            set_point.points.push(Point::new_from_polar(distance_angle[0], distance_angle[1]));
+        }
 
         loop {
             // On for 1s, off for 1s.
