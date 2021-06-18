@@ -7,6 +7,8 @@ mod utils;
 mod point_set;
 use point_set::PointSet;
 use point::Point;
+use static_math::{V3, DualQuaternion, Quaternion};
+use static_math::transformations::homogeneous_from_quaternion;
 // Halt on panic
 use panic_halt as _; // panic handler
 
@@ -32,7 +34,11 @@ fn main() -> ! {
 
         // Create a delay abstraction based on SysTick
         let mut delay = hal::delay::Delay::new(cp.SYST, clocks);
-
+        let v = V3::new_from(1.0, 2.0, 3.0);
+        let q  = Quaternion::from_euler_angles(10f32.to_radians(), 10f32.to_radians(), 10f32.to_radians());
+        // create a DualQuaternion and back again
+        let t = homogeneous_from_quaternion(&q, &V3::new_from(1.0, 2.0, 3.0));
+        let double = DualQuaternion::new_from_homogeneous(&t).to_homogeneous();
         //-------------------------------------------------------------------------
         //                        testing code
         //-------------------------------------------------------------------------

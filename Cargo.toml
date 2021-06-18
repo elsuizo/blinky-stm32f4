@@ -14,9 +14,11 @@ cortex-m-rt = "0.6"
 # Panic behaviour, see https://crates.io/keywords/panic-impl for alternatives
 panic-halt = "0.2"
 heapless = "0.7.1"
-# [dependencies.static-math]
-# path = "/home/elsuizo/Repos/static-math"
-# features = ["no-std"]
+
+[dependencies.static-math]
+version = "0.2.0"
+default-features = false
+features = ["no-std"]
 
 [dependencies.num]
 version = "0.4"
